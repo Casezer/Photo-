@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Take a Photo</title>
+</head>
+<body>
+  <h2>Camera Access Demo</h2>
+  <video id="video" width="300" autoplay></video>
+  <br>
+  <button onclick="takePhoto()">Take Photo</button>
+  <canvas id="canvas" width="300"></canvas>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert('Camera access denied or not supported.');
+      });
+
+    function takePhoto() {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    }
+  </script>
+</body>
+</html>
